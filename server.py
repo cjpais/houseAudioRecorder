@@ -23,17 +23,20 @@ def getTags():
 @app.route('/start/', methods=["POST"])
 def start():
     if not var.recording:
-        recording = Popen(["/usr/bin/sox", "-b", "16", "-e", "unsigned-integer",
+        var.recording = Popen(["/usr/bin/sox", "-b", "16", "-e", "unsigned-integer",
                            "-r", "48k", "-c", "2", "-d", "--clobber", 
-                           "/media/audio/1.mp3"])
+                           "1.mp3"])
         return "recording"
     return "not recording"
 
 @app.route('/stop/', methods=["POST"])
 def stop():
+    print "recording var {}".format(var.recording)
     if var.recording:
         var.recording.terminate()
         return "stopped recording"
     else:
-        "no recording"
+        return "no recording"
 
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", debug=True)
