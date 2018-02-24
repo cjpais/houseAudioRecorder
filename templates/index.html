@@ -5,11 +5,8 @@
 
     <body>
         <div>
-            <h1>Recording</h1>
-        </div>
-        <div>
-            <button id="recordToggle">Start Recording</button>
-            <button id="recordToggle2">Stop Recording</button>
+            <h1>Recording Time Here</h1>
+            <button id="recordToggle">{% recording.toggle %} Recording</button>
         </div>
 
 
@@ -24,17 +21,9 @@
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url: "/start/",
-                    data: {}
-                });
-            });
-            $("#recordToggle2").click(function(e) {
-                console.log("clicked");
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: "/stop/",
-                    data: {}
+                    url: "/toggleRec/",
+                    data: {},
+                    success: function (data) { console.log(data) }
                 });
             });
         </script>

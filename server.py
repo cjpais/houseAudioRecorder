@@ -1,42 +1,44 @@
-from subprocess import Popen
-from flask import Flask, render_template
-import var
+from flask import Flask, render_template, jsonify
+from recording import recording 
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template("index.html") 
+    return render_template("index.html", recording=recording) 
 
-@app.route('/status/', methods=["POST", "GET"])
-def status():
-    return "status"
+@app.route('/ls/')
+def list():
+    return render_template("list.html") 
 
 @app.route('/file/<int:id>/', methods=["POST", "GET"])
 def getFile(id):
-    return "file"
+    pass
 
-@app.route('/tags/', methods=["POST"])
-def getTags():
-    return "tags"
+@app.route('/tags/<string:s>/', methods=["POST"])
+def tags(s):
+    pass
 
 @app.route('/start/', methods=["POST"])
 def start():
-    if not var.recording:
-        var.recording = Popen(["/usr/bin/sox", "-b", "16", "-e", "unsigned-integer",
-                           "-r", "48k", "-c", "2", "-d", "--clobber", 
-                           "1.mp3"])
-        return "recording"
-    return "not recording"
+    if not recording.running:
+        recording.start()
+    return jsonify(recording)
 
 @app.route('/stop/', methods=["POST"])
 def stop():
     print "recording var {}".format(var.recording)
-    if var.recording:
-        var.recording.terminate()
-        return "stopped recording"
-    else:
-        return "no recording"
+    if recording.running:
+        recording.stop()
+    return jsonify(recording)
+
+"""
+DB Helper Methods
+"""
+
+def getFiles():
+    pass
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
