@@ -6,7 +6,7 @@
     <body>
         <div>
             <h1>Recording Time Here</h1>
-            <button id="recordToggle">{% recording.toggle %} Recording</button>
+            <button id="recordToggle">{{ recording.toggle }} Recording</button>
         </div>
 
 
@@ -16,14 +16,19 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
         <script>
+		var fuck = false;
             $("#recordToggle").click(function(e) {
-                console.log("clicked");
                 e.preventDefault();
+		// get button string
+		act = this.textContent.split(" ")[0]
+
                 $.ajax({
                     type: "POST",
-                    url: "/toggleRec/",
-                    data: {},
-                    success: function (data) { console.log(data) }
+                    url: "/toggle/",
+                    data: {action: act},
+                    success: function (data) { 
+			$("#recordToggle")[0].textContent = data["toggle"] + " Recording";
+		    }
                 });
             });
         </script>

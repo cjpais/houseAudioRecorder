@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request, url_for
 from recording import recording 
 
 app = Flask(__name__)
@@ -19,18 +19,15 @@ def getFile(id):
 def tags(s):
     pass
 
-@app.route('/start/', methods=["POST"])
-def start():
-    if not recording.running:
+@app.route('/toggle/', methods=["POST"])
+def toggle():
+    action = request.form['action']
+    if action == "Start" and not recording.running:
         recording.start()
-    return jsonify(recording)
-
-@app.route('/stop/', methods=["POST"])
-def stop():
-    print "recording var {}".format(var.recording)
-    if recording.running:
+    elif action == "Stop" and recording.running:
         recording.stop()
-    return jsonify(recording)
+
+    return recording.get_json()
 
 """
 DB Helper Methods
@@ -38,7 +35,6 @@ DB Helper Methods
 
 def getFiles():
     pass
-
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)

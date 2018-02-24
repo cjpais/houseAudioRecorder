@@ -1,5 +1,6 @@
 from subprocess import Popen
 from datetime import datetime
+from flask import jsonify
 
 class Recording:
     # really this is going to be database class that we use everywhere
@@ -16,32 +17,41 @@ class Recording:
         self.date_modified = None
         self.tags = []
 
-    def start(self, n):
-        self.name = n
+    def start(self):
+        self.name = 1
         self.running = True
         self.date_created = self.date_modified = datetime.utcnow
         self.process = Popen(["/usr/bin/sox", "-b", "16", "-e", "unsigned-integer",
                               "-r", "48k", "-c", "2", "-d", "--clobber", 
-                              "{}.mp3".format(self.name)])
+                              "/media/audio/{}.mp3".format(self.name)])
         self.toggle = "Stop"
 
-    def stop():
+    def stop(self):
         self.name = ""
         self.running = False
+        self.process.terminate()
         self.process = None
         self.toggle = "Start"
         self.tags = []
 
-    def setName(self, n):
+    def set_name(self, n):
         self.date_modified = datetime.now
         self.name = n
 
-    def setTags(self, ts):
+    def set_tags(self, ts):
         self.date_modified = datetime.now
         self.tags.append(ts)
 
-    def getTags(self):
+    def get_tags(self):
         return self.tags
+
+    def get_json(self):
+        return jsonify(
+            id=self.id, 
+            name=self.name, 
+            running=self.running,
+            toggle=self.toggle,
+            tags=self.tags)
          
 
 recording = Recording()
