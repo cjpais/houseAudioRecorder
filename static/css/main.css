@@ -1,0 +1,130 @@
+input {
+    font-family: inherit;
+}
+
+audio {
+    background-color: rgba(0,0,255,0);
+}
+
+.rec-page {
+	color: white;
+}
+
+.recording {
+	background: linear-gradient(to bottom right, green, yellow);
+}
+
+.not-recording {
+	background: linear-gradient(to bottom right, red, yellow);
+}
+
+.text-input {
+    font-weight: bold;
+    font-size: 1em;
+    background-color:#00000000;
+    color: white;
+    width: 400px;
+    overflow: scroll;
+    border: 3px solid white;
+}
+
+.time-counter {
+	margin-top: 3vh;
+}
+
+.action {
+	text-align: center;
+}
+/* TODO make mobile css */
+.btn {
+	border: 3px solid white;
+	background-color: rgba(0, 0, 255, 0);
+	color: white;
+	cursor: pointer;
+}
+
+.del-btn {
+   border: 2px solid white; 
+   padding-top: .2em;
+   padding-bottom: .2em;
+}
+
+.btn:hover {
+	
+}
+
+#recList {
+    border-collapse: collapse;
+    width: 100%;
+    color: white;
+}
+
+#recList td, #recList th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#recList tr {
+    background-color: rgba(0,0,0,.12);
+}
+
+#recList tr:nth-child(even) {
+    background-color: rgba(0,0,0,0);
+}
+
+#recList tr:hover {
+    background-color: rgba(0,0,0,.25);
+}
+
+#recList th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.tag-selected {
+	background-color: #33B5E5;
+}
+
+.tag {
+	background-color: #33B5E5;
+    display:inline-block;
+	border: 3px solid white;
+	color: white;
+	cursor: pointer;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    margin-top 15px;
+    margin-right: 15px;
+	font-size: 16px;
+    border-radius: 2em;
+}
+
+.tag-container {
+	background-color: rgba(0, 0, 255, 0);
+}
+
+.tag-input {
+    display:inline-block;
+    overflow: scroll;
+	border: 3px solid white;
+	background-color: rgba(0, 0, 255, 0);
+	color: white;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    margin: 15px;
+	font-size: 18px;
+    border-radius: 2em;
+}
+
+.rec-btn {
+	margin-top: 2vh;
+	height: 75px;
+	width: 200px;
+	font-size: 18px;
+}

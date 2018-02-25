@@ -1,14 +1,32 @@
 <html>
     <head>
         <title>Audio Recordings</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
 
-    <body>
+    <body id="page">
         <div>
-            <table>
+            <table id="recList">
                 <thead>
+                    <tr>
+                        <th>Delete</th>
+                        <th>Name</th>
+                        <th>Tags</th>
+                        <th>Date Created</th>
+                        <th>Play</th>
+                    </tr>
                 </thead>
                 <tbody>
+                    {% for r in list %}
+                    <tr id="{{ r.id }}">
+                        <td><button class="btn del-btn" id="{{ r.id }}">X</button></td>
+                    <td class="name">{{ r.name }}</td>
+                    <td>{{ r.tags }}</td>
+                    <td>{{ dates[loop.index - 1] }}</td>
+                    <td><audio controls preload="none" src="{{ r.filepath }}"/></td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -19,5 +37,15 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/gradient.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/listpage.js') }}"></script>
+        <script>
+            {% if status.running %}
+            gradientPercent = 1;
+            {% else %}
+            gradientPercent = 0;
+            {% endif %}
+            setGradientStyle(page);
+        </script>
     </body>
 </html>

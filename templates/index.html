@@ -1,13 +1,30 @@
 <html>
     <head>
         <title>House Audio Recorder</title>
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
 
-    <body>
-        <div>
-            <h1>Recording Time Here</h1>
-            <button id="recordToggle">{{ recording.toggle }} Recording</button>
-        </div>
+    {% if recording.running %}
+    <body id="page" class="rec-page recording">
+    {% else %}
+    <body id="page" class="rec-page not-recording">
+    {% endif %}
+	<div class="action">
+            <button id="tagbtn" class="btn rec-btn">View Tags</button>
+            <button id="recToggle" class="btn rec-btn">{{ recording.toggle }} Recording</button>
+            <button id="listbtn" class="btn rec-btn">View Recordings</button>
+    </div>
+
+    <div id="recInfo" class="action" {% if not recording.running %} hidden {% endif %}>
+	        <h1 id="recTime" class="time-counter"></h1>
+            <h2>Recording <input type="text" value="{{ recording.name }}" class="text-input" id="recName"></input></h2>
+
+            <div>
+                <input type="text" id="tagSearch" class="tag-input"></input>
+                <a id="tags"></a>
+            </div>
+	</div>
 
 
         <!-- Scripts -->
@@ -15,22 +32,17 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-        <script>
-		var fuck = false;
-            $("#recordToggle").click(function(e) {
-                e.preventDefault();
-		// get button string
-		act = this.textContent.split(" ")[0]
-
-                $.ajax({
-                    type: "POST",
-                    url: "/toggle/",
-                    data: {action: act},
-                    success: function (data) { 
-			$("#recordToggle")[0].textContent = data["toggle"] + " Recording";
-		    }
-                });
-            });
+	<script src="{{ url_for('static', filename='js/gradient.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/tagcontainer.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/recpage.js') }}"></script>
+        <script type="text/javascript">
+            {% if recording.running %}
+            gradientPercent = 1;
+            {% else %}
+            gradientPercent = 0;
+            {% endif %}
+            setGradientStyle(page);
         </script>
+
     </body>
 </html>
